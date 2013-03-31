@@ -1,7 +1,9 @@
 Coursera Forums JS Snapshot
 =========
 
-This is a snapshot of the frontend code that powers the new Coursera forums, a single-page Backbone web app. This snapshot includes Backbone models, views, Jade templates, and Stylus styles. You can read more about the forum code in this [technical blog post](http://blog.pamelafox.org/2013/03/rewriting-our-forums-with-backbone.html).
+This is a snapshot of the frontend code that powers the new Coursera forums, a single-page Backbone web app. 
+This snapshot includes Backbone models, views, Jade templates, and Stylus styles. 
+You can read more about the forum code in this [technical blog post](http://blog.pamelafox.org/2013/03/rewriting-our-forums-with-backbone.html).
 
 This snapshot was last updated on March 31, 2013.
 
