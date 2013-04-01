@@ -1,0 +1,145 @@
+- if (entry.get('deleted') && !user.canModerateForum()) {
+small.course-forum-delete-indicator
+  span.icon-trash
+  | A post was deleted
+- } else {
+div.course-forum-post-view-container(class=(entry.get('deleted')==1 ? "course-forum-post-deleted" : ''), data-permalink=entry.getPermalinkHash())
+
+  div.course-forum-post-header
+
+    div.course-forum-post-controls
+      - if (entry.get('stickied') == 1) {
+      span.course-forum-post-indicator.course-forum-indicator-good(title='Post was stickied by staff.')
+        i.icon-pushpin
+        | Pinned
+      - }
+      - if (entry.get('approved') == 1) {
+      span.course-forum-post-indicator.course-forum-indicator-good(title='Post was approved by staff.')
+        i.icon-star
+        | Approved
+      - }
+      - if (entry.get('is_spam') == 1) {
+      span.course-forum-post-indicator.course-forum-indicator-bad(title='Post was marked as spam.')
+        i.icon-trash
+        | Spam
+      - }
+      
+      - var popupId = "course-forum-post-controls-" + entry.get('id');
+      - if (entry.get('_viewer_can_edit') || user.canAccessAdmin() || user.canModerateForum()) {
+      a.course-forum-post-controls-toggle(
+        title='Post controls',
+        tabindex="0", role="button", aria-haspopup="true", aria-expanded="false", aria-owns=popupId,
+        data-popup="#" + popupId, data-popup-direction="se"
+        )
+        i.icon-cog
+      
+      div.course-forum-post-controls-popup.hide(id=popupId)
+        
+        - if (user.canModerateForum()) {
+        a.course-forum-post-admin-details-link(href='javascript:void(0)')
+          | Show Admin Details
+        - }
+
+        // If you have editing rights, you can edit or delete
+        - if (entry.get('_viewer_can_edit')) {
+        a.course-forum-post-edit-link(href='javascript:void(0)')
+          | Edit
+
+        - if (entry.get('deleted') == 0) {
+        a.course-forum-post-action-link(href='javascript:void(0)', data-property='deleted', data-value='1')
+          | Delete
+        - } else {
+        a.course-forum-post-action-link(href='javascript:void(0)', data-property='deleted', data-value='0')
+          | Un-delete
+        - }
+
+        - }
+
+        // Only forum moderators 
+        - if (user.canModerateForum() && entry.entryType == 'post') {
+        
+        -  if (!entry.get('original')) {
+        -   if (entry.get('stickied') == 0) {
+        a.course-forum-post-action-link(href='javascript:void(0)', data-property='stickied', data-value='1')
+          | Pin
+        -   } else {
+        a.course-forum-post-action-link(href='javascript:void(0)', data-property='stickied', data-value='0')
+          | Un-pin
+        -   }
+        -  }
+        
+        -  if (entry.get('approved') == 0) {
+        a.course-forum-post-action-link(href='javascript:void(0)', data-property='approved', data-value='1')
+          | Approve
+        -  } else {
+        a.course-forum-post-action-link(href='javascript:void(0)', data-property='approved', data-value='0')
+          | Un-approve
+        -  }
+
+        - }
+
+        - if (user.canModerateForum()) {
+        -  if (entry.get('is_spam') == 0) {
+        a.course-forum-post-action-link(href='javascript:void(0)', data-property='is_spam', data-value='1')
+          | Spam
+        -  } else {
+        a.course-forum-post-action-link(href='javascript:void(0)', data-property='is_spam', data-value='0')
+          | Not spam
+        -  }
+        - }
+
+      - }
+
+    span.course-forum-post-byline
+      
+  div.course-forum-post-text
+    | !{entry.getMessageHtml()}
+
+  - if (user.canModerateForum()) {
+  div.course-forum-post-admin-container
+    span #{entry.get('user_id')}
+    |  &middot; &nbsp;
+    span #{entry.get('_user_full_name')}
+    |  &middot; &nbsp;
+    - if (entry.get('_user_email_address')) {
+    span #{entry.get('_user_email_address')}
+    |  &middot; &nbsp;
+    - }
+    a(target="_blank", href=entry.get('_user_search_link'))
+      span.icon-comments
+      |  All Posts
+    |  &middot; &nbsp;
+    - if (user.canAccessAdmin()) {
+    a(target="_blank", href=entry.get('_user_details_link'))
+      span.icon-tasks
+      |  More Student Details
+    - }
+    br
+    - if (entry.get('user_agent')) {
+    a(target="_blank", href="http://user-agent-string.info/?Fuas=" + entry.get('user_agent'))
+        | #{entry.get('user_agent')}
+    - }
+  - }
+
+  - var voteClass = '';
+  - if (entry.get('votes') > 0) voteClass = 'course-forum-votes-positive';
+  - if (entry.get('votes') < 0) voteClass = 'course-forum-votes-negative';
+  div.course-forum-post-vote-controls
+    a.course-forum-post-vote-button.course-forum-post-vote-up(href='javascript:void(0)', data-direction-value='1', role='button', class=(entry.get('_viewer_vote') == "1"? 'course-forum-vote-active' : 'course-forum-vote-inactive'))
+      i.icon-chevron-up
+        span.hidden Vote this post up
+    span.course-forum-post-vote-count(class=voteClass)
+      | #{entry.get('votes')}
+    a.course-forum-post-vote-button.course-forum-post-vote-down(href='javascript:void(0)', data-direction-value='-1', role='button', class=(entry.get('_viewer_vote') == "-1"  ? 'course-forum-vote-active' : 'course-forum-vote-inactive'))
+      i.icon-chevron-down
+        span.hidden Vote this post down
+    span.course-forum-post-vote-hint
+      - if (entry.get('_viewer_can_vote')) {
+        span.icon-arrow-left
+        |  How helpful did you find this?
+      - }
+        |  If you think this #{entry.entryType} is inappropriate, please 
+        a.course-forum-post-controls-report(href='javascript:void(0)') flag it
+        | .
+  div(style='clear: both; height: 15px;')
+- }

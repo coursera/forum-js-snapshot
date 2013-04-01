@@ -1,0 +1,11 @@
+div.span3
+    h5
+      - if (total > threads.length) {
+      | Last #{threads.length} threads (of #{total})
+      - } else {
+      | #{threads.length} threads
+      - }
+    ul
+      each thread in threads
+        li
+          a(href=thread.link) #{thread.title}

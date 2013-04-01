@@ -1,0 +1,11 @@
+- if (thread.get('num_posts') > 1) {
+ul.nav.nav-pills.pull-right
+    li
+      span(style='padding: 8px; display: inline-block;') Sort replies by:
+    li(data-sort-name="oldest")
+      a(href=thread.getURLForSortOrder('oldest')) Oldest first
+    li(data-sort-name="newest")
+      a(href=thread.getURLForSortOrder('newest')) Newest first
+    li(data-sort-name="popular")
+      a(href=thread.getURLForSortOrder('popular')) Most popular
+- }

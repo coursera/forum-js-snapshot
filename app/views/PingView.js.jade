@@ -1,0 +1,24 @@
+div.modal.hide.course-forum-ping-modal(data-modal-overlay-class="course-modal-overlay-light", style="width:800px;") 
+  div.modal-header
+      a.close(href='javascript:void(0)', data-modal-close='data-modal-close') ×
+      h3 Notify Coursera
+  div(style="max-height:550px;").modal-body
+    p Please choose a priority using the following guidelines: 
+    ul
+      li Individual Student Issue: affects one or a small group of students (eg. a student can't find their Statement of Accomplishment, a student is having trouble viewing lectures)
+      li Class-Wide Issue: potentially affects all students but does not block progress in the course (eg. course logo has disappeared, a quiz question is definitely incorrect)
+      li Urgent Issue: needs to be addressed within 24 hours (eg. all students get an error message, a course page was accidentally deleted, all students are unable to submit a quiz)
+    div.control-group
+      label.control-label Priority
+      div.controls
+        select.course-forum-ping-priority(name='priority')
+          option(value='1') Individual Student Issue 
+          option(value='2') Class-Wide Issue 
+          option(value='3') Urgent Issue 
+      label.control-label Notes (optional)
+      div.controls
+        textarea.course-forum-ping-notes(style='height: 100px; width:90%;', name='notes')
+    div.control-group
+      div.controls
+        button.btn.course-forum-ping-coursera-send(type='submit', value='value') Send to Coursera
+        span.course-forum-ping-modal-status

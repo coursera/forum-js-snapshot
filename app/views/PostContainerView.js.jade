@@ -1,0 +1,15 @@
+div.course-forum-post-container
+
+  div.course-forum-post-top-container
+
+  - if (!post.isNew()) {
+
+  div.course-forum-comments-container
+  
+  - if (!post.get('original')) {
+  div.course-forum-new-comment-container
+  div.course-forum-new-comment-link-container
+    a.course-forum-new-comment-link(href="javascript:void(0);")
+      | + Add New Comment
+  - }
+  - }

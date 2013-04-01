@@ -1,0 +1,20 @@
+div(style="overflow:hidden; position:relative;")
+
+  img(style="width:60px;height:60px;float:left;border:1px solid #ccc;", src=user.get('photo_120') || config.url.assets + "images/icons/avatar.jpg")
+  div(style="float:left; margin-left: 10px;")
+    h4(style="margin-top:0px;") #{user.displayName()}
+        - if (user.get('forum_title') != 'Student') {
+        span.course-forum-profile-badge #{user.get('forum_title')}
+        - }
+    - if (user.get('bio')) {
+    p #{user.get('bio')}
+    - }
+
+  - if (user.fullProfileUrl()) {
+  a(href=user.fullProfileUrl(), style="float:right;")
+    span.icon-user 
+    |  View Coursera profile
+  - }
+
+  div(style="position: absolute; bottom: 0px; right: 0px; text-align: right;")
+    

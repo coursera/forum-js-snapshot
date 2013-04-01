@@ -1,0 +1,8 @@
+ul.course-forum-breadcrumb
+  - _.each(thread.get('crumbs'), function(crumb, i) {
+    li
+      a(href=crumb.link) #{crumb.title}
+      - if (i !== thread.get('crumbs').length-1) {
+      span.divider  / 
+      - }
+  - });

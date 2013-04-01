@@ -1,0 +1,23 @@
+link(href=config.url.assets + 'pages/home/account/select2.css', rel="stylesheet", type="text/css")
+
+i.icon-tags
+| &nbsp;
+
+each tag in thread.get('tags')
+  span.course-forum-thread-tag
+    a(href=tag.link) #{tag.tag_name}
+    | &nbsp;
+    a.course-forum-thread-tag-delete(data-tag=tag.tag_name, href='javascript:void(0)')
+      span.hidden Delete Tag
+      | ×
+- if (!thread.get('tags').length) {
+span
+  | No tags yet.
+- }
+a.course-forum-thread-tags-link(href='javascript:void(0)') + Add Tag
+
+form.course-forum-thread-tags-form.form-inline.hide
+  label Please try to use existing tags.   &nbsp;
+  input.input-medium(type="text", name="tags", style="margin-left:10px")
+  button.btn(type="button", style="margin-left:10px", disabled) Save
+  a(href="javascript:void(0)", role="button", style="margin-left:10px") Cancel

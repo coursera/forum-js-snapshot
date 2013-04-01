@@ -1,0 +1,23 @@
+- if (entry.get('anonymous')) {
+span
+  | Anonymous
+- } else {
+  a(href=entry.get('_user_profile_link'))
+    - if (entry.get('_user_profile')) {
+      - if (entry.get('_user_profile').photo_24) {
+      img(src=entry.get('_user_profile').photo_24)
+      - }
+      | #{entry.get('_user_profile').display_name}
+    - } else {
+      | #{entry.get('_user_full_name')}
+    - }
+- }
+- if (!entry.get('anonymous') && entry.get('_user_title') && entry.get('_user_title') != 'Student') {
+span.course-forum-profile-badge
+  | #{entry.get('_user_title')}
+- }
+|  · 
+a(href=entry.getPermalink(), name=entry.getPermalinkHash()) 
+  time(datetime=entry.get('post_time')) #{entry.get('post_time')}
+  | &nbsp;
+  span.icon-link

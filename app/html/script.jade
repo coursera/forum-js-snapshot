@@ -1,0 +1,46 @@
+script(
+  type="text/javascript",
+  src=config.site.url.app_assets + "js/core/require.js")
+
+script(
+  type="text/javascript",
+  data-baseurl=config.site.url.app_assets,
+  data-version=version,
+  data-timestamp=(new Date()).getTime(),
+  data-debug=config.site.debug ? 1 : 0,
+  id="_require")
+  
+    (function(el) {
+      //prevent throw
+      require.onError = function() { };
+  
+      require.config({
+        enforceDefine: true,
+        waitSeconds: 14,
+        baseUrl: el.getAttribute("data-baseurl"),
+        urlArgs: el.getAttribute("data-debug") == "1" ? "v=" + el.getAttribute("data-timestamp") : "",
+        shim: {
+           "underscore": {
+              exports: "_"
+           },
+  
+           "backbone": {
+              deps: ["underscore", "jquery"],
+              exports: "Backbone",
+              init: function(_, $) {
+                _.noConflict();
+                $.noConflict();
+                return Backbone.noConflict();
+              }
+           }
+        },
+        paths: {
+           "jquery":       "js/core/jquery",
+           "underscore":   "js/core/underscore",
+           "backbone":     "js/core/backbone"
+        },
+        callback: function() {
+          require(["pages/forum/widgets"]);
+        }
+      });
+    })(document.getElementById("_require"));

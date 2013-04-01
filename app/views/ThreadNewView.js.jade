@@ -1,0 +1,73 @@
+link(href=config.url.assets + 'pages/home/account/select2.css', rel="stylesheet", type="text/css")
+
+div.course-forum-thread-new
+  h2 New Thread
+  
+  form.form-horizontal.course-forum-thread-new-form
+    input(type="hidden", name="text_type", value="html")
+    div.control-group
+      div.controls
+        label.checkbox
+          input(type='checkbox', name='is_bug_report')
+          | Is this a bug report?
+        span.help-inline
+          | Please check if your problem or question has been addressed 
+          a(href='http://help.coursera.org') here
+          | .
+    div.control-group.hide.course-forum-thread-new-platform
+      div.controls
+        label.checkbox
+          input(type='checkbox', name='is_coursera_bug_report')
+          | This is a Coursera-platform bug report.
+        span.help-inline (e.g. video playback issues, 404 errors, issues encountered when submitting homeworks).
+      
+    div.control-group.hide.course-forum-thread-new-materials
+      div.controls
+        label.checkbox
+          input(type='checkbox', name='is_course_material_report')
+          | This is a report on a course material issue.
+        span.help-inline (e.g. typos and potential erros in the lectures, assignments/grading, and other course materials).
+
+    div.control-group
+      label.control-label(for="course-forum-thread-new-title-input") Title
+      div.controls
+        input(type="text", name="title", id="course-forum-thread-new-title-input")
+        p.help-block Give your post a good, informative title.
+          br
+          | e.g. Good: "When is assignment 1 due?" <br>e.g. Bad: "I have a question regarding the logistics of assignments in this course."
+    
+        div.course-forum-new-suggestions(style="padding-top:15px;display:none", aria-atomic="true", aria-live="polite")
+          p Some of these other threads may be of interest:
+            div.course-forum-new-suggestions-list
+
+    div.control-group
+      label.control-label(for="course-forum-thread-new-content-input") Content
+      div.controls
+        textarea(name="text", style="min-height: 200px;", id="course-forum-thread-new-content-input")
+    
+    div.control-group
+      label.control-label(for="course-forum-thread-new-tags-input") Tags
+      div.controls
+        input.input-medium(type="text", name="tags", style="width:475px;", id="course-forum-thread-new-tags-input")
+        br
+        span.help-inline Try to use existing tags.
+
+    div.control-group
+      label.control-label(for="course-forum-thread-new-forum-input") Forum:
+      div.controls
+        select.course-forum-thread-new-subforums(name="forum_id", id="course-forum-thread-new-forum-input")
+        
+    div.control-group
+      div.controls
+        label.checkbox
+          input(type="checkbox", name="anonymous", value="1")
+          | Make this post anonymous to other students
+    div.control-group
+      div.controls
+        label.checkbox
+          input(type="checkbox", name="_user_is_subscribed", value="1", checked)
+          | Subscribe to this thread at the same time
+    div.control-group
+      div.controls
+        button.btn.btn-primary(type="submit") Create new thread
+        span.help-inline.error.course-forum-thread-new-error

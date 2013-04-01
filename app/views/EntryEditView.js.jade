@@ -1,0 +1,32 @@
+div.course-forum-post-edit-container
+  div.course-forum-post-header
+    - if(entry.isNew()) {
+    | New #{entry.entryType}
+    - } else {
+    | Editing #{entry.entryType}...
+    - }
+  form.course-forum-post-edit-form
+    input(type="hidden", name="text_type", value="html")
+    div.control-group
+      label.hidden Message
+      textarea(name=entry.textProp, style="width:100%; min-height: 100px;")
+        | !{entry.getEditableHtml()}
+    - if (entry.isNew()) {
+    div.controls
+      label.checkbox
+        input(type="checkbox", name="anonymous", value="1")
+        | Make this post anonymous to other students
+    div.controls
+      label.checkbox
+        input(type="checkbox", name="subscribe", value="1", checked)
+        | Subscribe to this thread at the same time
+    - }
+    div.control-group
+      button.btn.course-forum-post-edit-save(type="submit")
+        - if(entry.isNew()) {
+        | Add #{entry.entryType}
+        - } else {
+        | Update #{entry.entryType}
+        - }
+      span &nbsp; &nbsp;
+      a.course-forum-post-edit-cancel(href="javascript:void(0)", role="Button") Cancel

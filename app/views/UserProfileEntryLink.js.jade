@@ -1,0 +1,13 @@
+div.span4
+    h5
+      - if (total > entries.length) {
+      | Last #{entries.length} #{header} (of #{total})
+      - } else {
+      | #{entries.length} #{header}
+      - }
+    ul
+      each entry in entries
+        li
+          span In 
+            a(href=entry.link) #{entry.thread_title}: 
+          span "#{entry.snippet}"

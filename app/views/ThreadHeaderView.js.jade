@@ -1,0 +1,109 @@
+div.course-forum-thread-title
+  h2 #{thread.get('title')}
+div.course-forum-thread-header
+  div.course-forum-thread-controls(style="display:inline-block;")
+    - if(thread.get('stickied')) {
+    span.course-forum-thread-indicator.course-forum-indicator-good(title="This thread was pinned.")
+      i.icon-pushpin(title="Pinned Post")
+      |  Pinned
+    - }
+    - if(thread.get('approved')) {
+    span.course-forum-thread-indicator.course-forum-indicator-good(title="This thread was approved by staff.")
+      i.icon-star
+      |  Approved
+    - }
+    - if(thread.get('_forum_can_be_resolved') && thread.get('unresolved') === 0) {
+    span.course-forum-thread-indicator.course-forum-indicator-good(title="This thread was marked as resolved.")
+      i.icon-check
+      |  Resolved
+    - }
+    - if (thread.get('locked')) {
+    span.course-forum-thread-indicator(title="This thread was locked by an admin.")
+      i.icon-lock
+      |  Locked
+    - }
+    - if (thread.get('is_spam')) {
+    span.course-forum-thread-indicator.course-forum-indicator-bad(title="This thread was marked as spam by an admin.")
+      i.icon-trash
+      |  Spam
+    - }
+    - if (thread.get('deleted') == 1) {
+    span.course-forum-thread-indicator.course-forum-indicator-bad(title="This thread was deleted by an admin.")
+      i.icon-trash
+      |  Deleted
+    - }
+
+    - var popupId = 'course-forum-thread-controls-popup' + thread.get('id');
+    - if (thread.get('_viewer_can_resolve') || thread.get('_viewer_can_delete') || thread.get('_viewer_can_edit_title') || user.canModerateForum()) {
+    a.course-forum-thread-controls-toggle(
+      title="Thread controls",
+      tabindex="0", role="button", aria-haspopup="true", aria-expanded="false", aria-owns=popupId,
+      data-popup="#" + popupId, data-popup-direction="se"
+      )
+      i.icon-cog
+
+    div.course-forum-thread-controls-popup.hide(id=popupId)
+
+      - if (user.canModerateForum()) {
+
+      - if (thread.get('locked')) {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="locked", data-value="0") Un-lock
+      - } else {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="locked", data-value="1") Lock
+      - }
+
+      - if (thread.get('stickied')) {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="stickied", data-value="0") Un-pin
+      - } else {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="stickied", data-value="1") Pin
+      - }
+
+      - if (thread.get('approved')) {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="approved", data-value="0") Un-approve
+      - } else {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="approved", data-value="1") Approve
+      - }
+
+      - if (thread.get('is_spam')) {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="is_spam", data-value="0") Not spam
+      - } else {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="is_spam", data-value="1") Spam
+      - }
+
+      - } // End moderate check
+
+      - if (thread.get('_viewer_can_edit_title')) {
+      a.course-forum-thread-edit-title-link(href="javascript:void(0)") Edit title
+      - }
+
+      - if (thread.get('_viewer_can_delete')) {
+      - if (thread.get('deleted')) {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="deleted", data-value="0") Un-delete
+      - } else {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="deleted", data-value="1") Delete
+      - }
+      - }
+      
+      - if (thread.get('_forum_can_be_resolved') && thread.get('_viewer_can_resolve')) {
+      - if (thread.get('unresolved') === 0) {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="unresolved", data-value="1") Un-resolve
+      - } else {
+      a.course-forum-thread-action-link(href="javascript:void(0)", data-property="unresolved", data-value="0") Resolve
+      - }
+      - }
+
+      - if (user.canModerateForum()) {
+      a.course-forum-thread-admin-details-link(href="javascript:void(0)") Show Admin Details
+      - }
+    - }
+
+
+  div(style="margin-right:10px; display:inline-block;")
+    - if (thread.get('_viewer_subscription')) {
+      i.icon-envelope
+      |  You are subscribed.  
+      a.course-forum-thread-unsubscribe-link(href="javascript:void(0);") Unsubscribe
+    - } else {
+      a.course-forum-thread-subscribe-link(href="javascript:void(0);") Subscribe for email updates.
+    - }
+    

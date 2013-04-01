@@ -1,0 +1,13 @@
+div.modal.hide.course-forum-report-modal(data-modal-overlay-class="course-modal-overlay-light")
+  div.modal-header
+      a.close(href='javascript:void(0)', data-modal-close='data-modal-close') ×
+      h3 Report this post
+  div.modal-body
+    p Please report posts that are abusive/offensive, that infringe on copyright, or that are otherwise in violation of our Honor Code.
+    div.control-group
+      label.control-label Description
+      div.controls
+        textarea(style='height: 100px; width:90%;', name='description')
+    div.control-group
+      div.controls
+        button.btn(type='submit', value='value', data-modal-close) Send Report
